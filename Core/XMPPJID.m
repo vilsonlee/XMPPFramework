@@ -205,6 +205,31 @@
 	return jid;
 }
 
+
+///Vilson add New Init Method
+-(instancetype)initJidwithUser:(NSString *)user domain:(NSString *)domain resource:(NSString *)resource
+{
+    
+    NSString *prepUser      = [XMPPStringPrep prepNode:user];
+    NSString *prepDomain    = [XMPPStringPrep prepDomain:domain];
+    NSString *prepResource  = [XMPPStringPrep prepResource:resource];
+    
+    if ([XMPPJID validateUser:prepUser domain:prepDomain resource:prepResource])
+    {
+        self = [super init];
+        if (self) {
+            self->user      = [prepUser copy];
+            self->domain    = [prepDomain copy];
+            self->resource  = [prepResource copy];
+        }
+        return self;
+    }
+    
+    return nil;
+    
+}
+
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark Encoding, Decoding:
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

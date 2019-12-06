@@ -104,5 +104,25 @@ NS_ASSUME_NONNULL_BEGIN
 **/
 - (BOOL)shouldResendOpeningNegotiationAfterSuccessfulAuthentication;
 
+
+/**
+ * Vilson:
+ * Customized some parameters in SCRAMSHA1Authentication to complete the entire custom verification process.
+ * Note that this modification must be done in sync with the server.
+ * Note that this modification is only for the project I am using. Others please use the native method.
+ *
+**/
+- (id)initWithStream:(XMPPStream *)stream
+            password:(NSString *)password
+            deviceID:(NSString *)deviceID
+            userType:(NSString *)userType
+          authOpType:(NSString *)authOpType
+          verifiCode:(NSString *)verifiCode
+          iPhoneName:(NSString *)iphoneName
+          deviceType:(NSString *)deviceType
+         loginSource:(NSString *)loginSource
+   verifiMsgLanguage:(NSString *)verifiMsgLanguage;
+
+
 @end
 NS_ASSUME_NONNULL_END

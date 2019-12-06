@@ -50,6 +50,23 @@ static const int xmppLogLevel = XMPP_LOG_LEVEL_WARN;
 @property (nonatomic, strong) NSData *clientProofData;
 @property (nonatomic) CCHmacAlgorithm hashAlgorithm;
 
+
+/*
+Vilson: FIXE:
+*/
+@property (nonatomic, copy) NSString *deviceID;//设备OPEN_UUID (换设备)
+@property (nonatomic, copy) NSString *userType;//登录类型(JID/phoneNumber）
+
+@property (nonatomic, copy) NSString *verifiCode;//验证码
+@property (nonatomic, copy) NSString *verifiMsgLanguage;//app显示语言(决定验证码短讯的语言)
+
+@property (nonatomic, copy) NSString *iPhoneName;//手机别名
+@property (nonatomic, copy) NSString *deviceType;//设备类型版本
+
+@property (nonatomic, copy) NSString *loginSource;//来源哪个APP
+@property (nonatomic, copy) NSString *authOptype;//验证登录类型(check/getmsg/checkmsg)
+
+
 @end
 
 ///////////RFC5802 http://tools.ietf.org/html/rfc5802 //////////////
@@ -181,7 +198,38 @@ static const int xmppLogLevel = XMPP_LOG_LEVEL_WARN;
     
     self.clientFirstMessageBare = [NSString stringWithFormat:@"n=%@,r=%@",self.username,self.clientNonce];
     
-    NSData *message1Data = [[NSString stringWithFormat:@"n,,%@",self.clientFirstMessageBare] dataUsingEncoding:NSUTF8StringEncoding];
+    
+    //推送token
+    NSString * deviceTokenStr = [[NSUserDefaults standardUserDefaults] objectForKey:@"deviceToken"];
+    
+    deviceTokenStr = @"";
+    //当前版本号
+    NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+        
+    //@"1.0.1";
+    NSString * currentVersion = [NSString stringWithFormat:@"%@",version];
+    
+    NSString * newClientFirstMessageBare = [NSString stringWithFormat:@"n=%@,r=%@,t=%@,l=%@,d=%@,m=%@,p=%@,dt=%@,v=%@,n=%@,t=%@,r=%@,l=%@",
+                                            self.username,
+                                            self.clientNonce,
+                                            self.authOptype,
+                                            self.userType,
+                                            self.deviceID,
+                                            self.verifiCode,
+                                            @"i",
+                                            deviceTokenStr,
+                                            currentVersion,
+                                            @"VilsonX",
+                                            @"iPhone iOS 12.2",
+                                            self.loginSource,
+                                            self.verifiMsgLanguage];
+    
+    
+//    NSData *message1Data = [[NSString stringWithFormat:@"n,,%@",self.clientFirstMessageBare] dataUsingEncoding:NSUTF8StringEncoding];
+    
+    NSLog(@"newClientFirstMessageBare =---= %@\n",newClientFirstMessageBare);
+    
+    NSData *message1Data = [[NSString stringWithFormat:@"n,,%@",newClientFirstMessageBare] dataUsingEncoding:NSUTF8StringEncoding];
     
     return [message1Data xmpp_base64Encoded];
 }

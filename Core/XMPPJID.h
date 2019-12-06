@@ -18,6 +18,10 @@ NS_ASSUME_NONNULL_BEGIN
 + (nullable XMPPJID *)jidWithString:(NSString *)jidStr resource:(nullable NSString *)resource;
 + (nullable XMPPJID *)jidWithUser:(nullable NSString *)user domain:(NSString *)domain resource:(nullable NSString *)resource;
 
+
+///Vilson add New Init Method
+- (instancetype)initJidwithUser:(NSString *)user domain:(NSString *)domain resource:(NSString *)resource;
+
 @property (nonatomic, nullable, copy, readonly) NSString *user;
 @property (nonatomic, copy, readonly) NSString *domain;
 @property (nonatomic, nullable, copy, readonly) NSString *resource;
