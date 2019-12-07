@@ -80,6 +80,36 @@ Vilson: FIXE:
 	return @"SCRAM-SHA-1";
 }
 
+
+-(id)initWithStream:(XMPPStream *)stream
+           password:(NSString *)password
+           deviceID:(NSString *)deviceID
+           userType:(NSString *)userType
+         authOpType:(NSString *)authOpType
+         verifiCode:(NSString *)verifiCode
+         iPhoneName:(NSString *)iphoneName
+         deviceType:(NSString *)deviceType
+        loginSource:(NSString *)loginSource
+  verifiMsgLanguage:(NSString *)verifiMsgLanguage
+{
+    if (self = [self initWithStream:stream
+                           username:nil
+                           password:password]) {
+        
+        self.deviceID           = deviceID;
+        self.userType           = userType;
+        self.authOptype         = authOpType;
+        self.verifiCode         = verifiCode;
+        self.iPhoneName         = iphoneName;
+        self.deviceType         = deviceType;
+        self.loginSource        = loginSource;
+        self.verifiMsgLanguage  = verifiMsgLanguage;
+        
+    }
+    return self;
+}
+
+
 - (id)initWithStream:(XMPPStream *)stream password:(NSString *)password
 {
 	return [self initWithStream:stream username:nil password:password];
